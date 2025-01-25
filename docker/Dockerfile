@@ -10,5 +10,5 @@ WORKDIR /app
 COPY requirements.txt /app/
 COPY src-python/app.py /app/
 RUN pip3 install --no-cache-dir -r requirements.txt
-EXPOSE 3000
+EXPOSE 000
 CMD ["python3", "app.py"]
