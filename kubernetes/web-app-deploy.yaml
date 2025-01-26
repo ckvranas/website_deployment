@@ -22,11 +22,26 @@ spec:
         app: web-app
     spec:
       containers:
-      - image: docker.io/evrachr/website_deployment:website
+      - image: docker.io/evrachr/website_deployment:v3
         name: my-container
         imagePullPolicy: Always
         ports: 
-        - containerPort: 3000
+        - containerPort: 4000
           protocol: TCP
+          name: web-app-port
+        readinessProbe:
+          httpGet:
+            path: /papers
+            port: web-app-port 
+            scheme: HTTP  
+          initialDelaySeconds: 5
+          periodSeconds: 5  
+        livenessProbe:
+          httpGet:
+            path: /papers
+            port: web-app-port 
+            scheme: HTTP  
+          initialDelaySeconds: 5
+          periodSeconds: 5
         resources: {}
 status: {}
