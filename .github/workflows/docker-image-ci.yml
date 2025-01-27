@@ -7,8 +7,6 @@ on:
       - main
 
 env:
-  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
   DOCKER_IMAGE: evrachr/website_deployment
   DOCKER_TAG: v3      
 
@@ -18,7 +16,7 @@ jobs:
     steps:
       - name: Build Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_IMAGE }}/${{ secrets.DOCKER_TAG }} .
+          docker build -t ${{ DOCKER_IMAGE }}/${{ DOCKER_TAG }} .
 
   deploy: 
     needs: build
