@@ -76,10 +76,7 @@ jobs:
       - name: Deploy application
         run: |
           kubectl apply -f ${GITHUB_WORKSPACE}/kubernetes/web-app-deploy.yaml
-          while ! kubectl rollout status deployment/web-app --timeout=15s; do
-            echo "Waiting for rollout to complete..."
-            sleep 1
-          done
+          kubectl rollout status deployment/web-app
 
       - name: Create service
         run: |
@@ -89,7 +86,7 @@ jobs:
         run: |
           kubectl get all
           kubectl port-forward svc/web-app $PORT:$PORT 
-          curl -X GET http://localhost:$PORT -m 5      
+          curl -X GET http://localhost:$PORT   
           if [ $? -eq 0 ]; then
             echo "Deployment is up and running"
           else
