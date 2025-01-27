@@ -86,6 +86,7 @@ jobs:
         run: |
           kubectl get all
           kubectl port-forward svc/web-app $PORT:$PORT &
+          sleep 5
           curl -X GET http://localhost:$PORT
           if [ $? -eq 0 ]; then
             echo "Deployment is up and running!"
