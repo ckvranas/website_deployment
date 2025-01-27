@@ -33,7 +33,7 @@ jobs:
 
       - name: Run Docker image
         run: |
-          /usr/bin/bash -c "docker run -p $PORT:$PORT $DOCKER_IMAGE:$DOCKER_TAG" & wait $!
+          /usr/bin/bash -c "docker run -p $PORT:$PORT $DOCKER_IMAGE:$DOCKER_TAG" &
           sleep 5
           curl -X GET http://localhost:$PORT
           if [ $? -eq 0 ]; then
