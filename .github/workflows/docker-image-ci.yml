@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: Build Docker image
         run: |
-          docker build -t ${{ DOCKER_IMAGE }}/${{ DOCKER_TAG }} .
+          docker build -t $DOCKER_IMAGE:$DOCKER_TAG .
 
   deploy: 
     needs: build
@@ -33,5 +33,5 @@ jobs:
         with:
           push: true
           run: |
-            docker tag ${{ secrets.DOCKER_IMAGE }}/${{ secrets.DOCKER_TAG }} ${{ secrets.DOCKER_IMAGE }}:latest
-            docker push ${{ secrets.DOCKER_IMAGE }}:latest
+            docker tag $DOCKER_IMAGE:$DOCKER_TAG $DOCKER_IMAGE:latest
+            docker push $DOCKER_IMAGE:latest
