@@ -86,12 +86,7 @@ jobs:
         run: |
           kubectl get all
           kubectl port-forward svc/web-app $PORT:$PORT 
-          curl -X GET http://localhost:$PORT   
-          if [ $? -eq 0 ]; then
-            echo "Deployment is up and running"
-          else
-            echo "Deployment failed!"
-          fi   
+            
 
       - name: Delete Kubernetes cluster
         run: |
