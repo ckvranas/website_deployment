@@ -71,11 +71,26 @@ jobs:
 
       - name: Create Kubernetes cluster
         run: |
-          kind create cluster --name test-cluster
+          kind create cluster --name test-cluster    
 
       - name: Deploy application
         run: |
           kubectl apply -f ${GITHUB_WORKSPACE}/kubernetes/web-app-deploy.yaml    
+
+      - name: Create service
+        run: |
+          kubectl apply -f ${GITHUB_WORKSPACE}/kubernetes/web-app-service.yaml
+                  
+      - name: Test out the deployment
+        run: |
+          kubectl get all
+          kubectl port-forward svc/web-app $PORT:$PORT 
+          curl -X GET http://localhost:$PORT -m 5      
+          if [ $? -eq 0 ]; then
+            echo "Deployment is up and running"
+          else
+            echo "Deployment failed!"
+          fi   
 
       - name: Delete Kubernetes cluster
         run: |
