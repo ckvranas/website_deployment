@@ -33,7 +33,7 @@ jobs:
 
       - name: Run Docker image
         run: |
-          /usr/bin/bash -c "docker run -p $PORT:$PORT $DOCKER_IMAGE:$DOCKER_TAG" & curl -X GET http://localhost:$PORT
+          /usr/bin/bash -c "docker run -p $PORT:$PORT $DOCKER_IMAGE:$DOCKER_TAG" & curl -X GET http://localhost:$PORT -m 10
           if [ $? -eq 0 ]; then
             echo "HTTP response successful, pushing image to Docker Hub"
           else
