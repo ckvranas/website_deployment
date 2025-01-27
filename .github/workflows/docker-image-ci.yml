@@ -27,8 +27,8 @@ jobs:
 
       - name: Build Docker image
         run: |
-          ls ${GITHUB_WORKSPACE}/docker/src-python
-          docker build -f ${GITHUB_WORKSPACE}/docker/Dockerfile.txt -t $DOCKER_IMAGE:$DOCKER_TAG .
+          cd ${GITHUB_WORKSPACE}/docker
+          docker build -f ./Dockerfile.txt -t $DOCKER_IMAGE:$DOCKER_TAG .
 
   deploy: 
     needs: build
