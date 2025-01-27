@@ -9,6 +9,7 @@ on:
 env:
   DOCKER_IMAGE: evrachr/website_deployment
   DOCKER_TAG: v3      
+  DOCKERFILE_PARENT_DIR: ${{ github.workspace }}"/docker
 
 jobs:
   build:
@@ -16,7 +17,7 @@ jobs:
     steps:
       - name: Build Docker image
         run: |
-          docker build -t $DOCKER_IMAGE:$DOCKER_TAG .
+          docker build -t $DOCKER_IMAGE:$DOCKER_TAG $DOCKERFILE_PARENT_DIR
 
   deploy: 
     needs: build
