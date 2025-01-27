@@ -9,7 +9,7 @@ on:
 env:
   DOCKER_IMAGE: evrachr/website_deployment
   DOCKER_TAG: v3      
-  DOCKERFILE_PARENT_DIR: ${{ github.workspace }}"/docker
+  DOCKERFILE_PARENT_DIR: ${GITHUB_WORKSPACE}/docker
 
 jobs:
   build:
