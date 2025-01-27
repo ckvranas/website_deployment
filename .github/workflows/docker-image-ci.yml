@@ -16,11 +16,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          path: ./
 
       - name: Build Docker image
         run: |
           ls ${{ github.workspace }}
-          ls ${{ github.workspace }}/docker
           docker build -f ${GITHUB_WORKSPACE}/docker/ -t $DOCKER_IMAGE:$DOCKER_TAG .
 
   deploy: 
