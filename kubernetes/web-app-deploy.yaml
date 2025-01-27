@@ -22,7 +22,7 @@ spec:
         app: web-app
     spec:
       containers:
-      - image: docker.io/evrachr/website_deployment:v3
+      - image: docker.io/evrachr/website_deployment:latest
         name: my-container
         imagePullPolicy: Always
         ports: 

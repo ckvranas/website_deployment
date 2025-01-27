@@ -75,7 +75,11 @@ jobs:
 
       - name: Deploy application
         run: |
-          kubectl apply -f ${GITHUB_WORKSPACE}/kubernetes/web-app-deploy.yaml    
+          kubectl apply -f ${GITHUB_WORKSPACE}/kubernetes/web-app-deploy.yaml
+          while ! kubectl rollout status deployment/<deployment-name> --timeout=15s; do
+            echo "Waiting for rollout to complete..."
+            sleep 1
+          done
 
       - name: Create service
         run: |
