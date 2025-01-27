@@ -9,6 +9,7 @@ on:
 env:
   DOCKER_IMAGE: evrachr/website_deployment
   DOCKER_TAG: v3      
+  PORT: 4000
 
 jobs:
   build:
@@ -29,6 +30,16 @@ jobs:
         run: |
           cd ${GITHUB_WORKSPACE}/docker
           docker build -f ./Dockerfile.txt -t $DOCKER_IMAGE:$DOCKER_TAG .
+
+      - name: Run Docker image
+        run: |
+          docker run -d -p $PORT:$PORT $DOCKER_IMAGE:$DOCKER_TAG 
+          curl -X GET http://localhost:$PORT
+          if [ $? -eq 0 ]; then
+            echo "HTTP response successful, pushing image to Docker Hub"
+          else
+            echo "HTTP response failed, not pushing image to Docker Hub"
+          fi 
 
       - name: Push to Docker Hub
         run: |
