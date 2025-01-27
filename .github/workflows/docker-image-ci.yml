@@ -85,8 +85,15 @@ jobs:
       - name: Test out the deployment
         run: |
           kubectl get all
-          kubectl port-forward svc/web-app $PORT:$PORT 
-            
+          kubectl port-forward svc/web-app $PORT:$PORT &
+          curl -X GET http://localhost:$PORT
+          if [ $? -eq 0 ]; then
+            echo "Deployment is up and running!"
+            echo "Stop port-forwarding..."
+            kill -9 $(lsof -i :$PORT -t)
+          else
+            echo "Deployment failed!"
+          fi 
 
       - name: Delete Kubernetes cluster
         run: |
