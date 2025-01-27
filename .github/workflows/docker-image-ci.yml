@@ -22,7 +22,7 @@ jobs:
       - name: Build Docker image
         run: |
           ls ${GITHUB_WORKSPACE}/docker
-          docker build -f ${GITHUB_WORKSPACE}/docker/ -t $DOCKER_IMAGE:$DOCKER_TAG .
+          docker build -f ${GITHUB_WORKSPACE}/docker -t $DOCKER_IMAGE:$DOCKER_TAG .
 
   deploy: 
     needs: build
