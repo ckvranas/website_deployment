@@ -1,0 +1,37 @@
+name: Docker image for CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+variables:
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+  DOCKER_IMAGE: evrachr/website_deployment
+  DOCKER_TAG: v3      
+
+jobs:
+  build:
+    steps:
+      - name: Build Docker image
+        run: |
+          docker build -t ${{ secrets.DOCKER_IMAGE }}/${{ secrets.DOCKER_TAG }} .
+
+  deploy: 
+    needs: build
+    steps:
+      - name: Login to Docker Hub   
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Push to Docker Hub
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          run: |
+            docker tag ${{ secrets.DOCKER_IMAGE }}/${{ secrets.DOCKER_TAG }} ${{ secrets.DOCKER_IMAGE }}:latest
+            docker push ${{ secrets.DOCKER_IMAGE }}:latest
