@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: Build Docker image
         run: |
-          docker build -t $DOCKER_IMAGE:$DOCKER_TAG ${{ github.workspace }}/docker
+          docker build -t $DOCKER_IMAGE:$DOCKER_TAG -f ${{ github.workspace }}/docker
 
   deploy: 
     needs: build
